@@ -1,7 +1,13 @@
 # Razor UI
 
+To install dependencies
+
+<pre>
+$ npm install
+</pre>
+
 To start application
 
 <pre>
-	vagrant up
+$ npm start
 </pre>

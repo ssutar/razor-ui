@@ -1,7 +1,7 @@
 import React from 'react';
-import ItemList from '../components/itemList.jsx';
-import ItemStore from '../stores/itemStore';
-import ItemActions from '../actions/itemActions';
+import RepoTable from '../components/repoTable.jsx';
+import RepoStore from '../stores/repoStore';
+import RepoActions from '../actions/repoActions';
 
 class Home extends React.Component {
 
@@ -14,8 +14,8 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.unsubscribe = ItemStore.listen(this.onStatusChange.bind(this));
-    ItemActions.loadItems();
+    this.unsubscribe = RepoStore.listen(this.onStatusChange.bind(this));
+    RepoActions.loadItems();
   }
 
   componentWillUnmount() {
@@ -29,8 +29,24 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <h1>Home Area</h1>
-        <ItemList { ...this.state } />
+        <div className="page-title">
+          <h1 className="title">Repositories</h1>
+          <div className="description">List of repositories on the server</div>
+        </div>
+        <div className="row">
+          <div className="col-xs-12">
+            <div className="card">
+              <div className="card-header">
+                <div className="card-title">
+                  <h2 className="title">Repositories</h2>
+                </div>
+              </div>
+              <div className="card-body">
+                <RepoTable { ...this.state } />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

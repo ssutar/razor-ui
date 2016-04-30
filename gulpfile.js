@@ -2,8 +2,9 @@ var path = require('path');
 var del = require('del');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var Proxy = require('gulp-api-proxy');
+// var Proxy = require('gulp-api-proxy');
 var $ = require('gulp-load-plugins')();
+var server = require('./server.js');
 
 // set variable via $ gulp --type production
 var environment = $.util.env.type || 'development';
@@ -26,6 +27,51 @@ var autoprefixerBrowsers = [
   'android >= 4.4',
   'bb >= 10'
 ];
+
+gulp.task("vendorCss", function() {
+  return gulp.src([
+      'node_modules/bootstrap/dist/css/bootstrap.css',
+      'node_modules/bootstrap/dist/css/bootstrap-theme.css',
+      'node_modules/font-awesome/css/font-awesome.css',
+      'node_modules/animate.css/animate.css',
+      'node_modules/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css',
+      'node_modules/datatables/media/css/jquery.dataTables.css',
+      'node_modules/select2/dist/css/select2.css'
+    ])
+    .pipe($.concat('vendor.css'))
+    .pipe(gulp.dest(dist + 'vendor/css/'))
+    .pipe(isProduction ? $.uglify() : $.util.noop())
+    .pipe(gulp.dest(dist + 'vendor/css/'))
+    .pipe($.size({ title : 'css' }))
+    .pipe($.connect.reload());
+});
+
+gulp.task("vendorFonts", function() {
+  return gulp.src([
+      'node_modules/font-awesome/fonts/*.{woff2,woff,ttf,svg,eot,otf}'
+    ])
+    .pipe(gulp.dest(dist + 'vendor/fonts/'))
+    .pipe($.size({ title : 'fonts' }))
+    .pipe($.connect.reload());
+});
+
+gulp.task("vendorJs", function() {
+  return gulp.src([
+      'node_modules/jquery/dist/jquery.js',
+      'node_modules/bootstrap/dist/js/bootstrap.js',
+      'node_modules/bootstrap-switch/dist/js/bootstrap-switch.js',
+      'node_modules/jquery-match-height/dist/jquery.matchHeight.js',
+      'node_modules/datatables/media/js/jquery.dataTables.min.js',
+      'node_modules/select2/dist/js/select2.full.js',
+      app + 'vendor/scripts/init.js'
+    ])
+    .pipe($.concat('vendor.js'))
+    .pipe(gulp.dest(dist + 'vendor/js/'))
+    .pipe(isProduction ? $.uglify() : $.util.noop())
+    .pipe(gulp.dest(dist + 'vendor/js/'))
+    .pipe($.size({ title : 'js' }))
+    .pipe($.connect.reload());
+});
 
 gulp.task('scripts', function() {
   return gulp.src(webpackConfig.entry)
@@ -71,19 +117,24 @@ gulp.task('styles', function() {
 
 // add livereload on the given port
 gulp.task('serve', function() {
-  $.connect.server({
-    root: dist,
+  // $.connect.server({
+  //   root: dist,
+  //   port: port,
+  //   livereload: {
+  //     port: 35729
+  //   },
+  //   middleware: function (connect, opt) {
+  //     // `localhost/server/api/getuser/1` will be proxied to `192.168.1.186/server/api/getuser/1`
+  //     opt.route = '/api';
+  //     opt.context = 'http://192.168.2.3:8150';
+  //     var proxy = new Proxy(opt);
+  //     return [proxy];
+  //   }
+  // });
+  server.start({
+    serveDirectory: dist,
     port: port,
-    livereload: {
-      port: 35729
-    },
-    middleware: function (connect, opt) {
-      // `localhost/server/api/getuser/1` will be proxied to `192.168.1.186/server/api/getuser/1`
-      opt.route = '/api';
-      opt.context = 'http://192.168.2.3:8150/api';
-      var proxy = new Proxy(opt);
-      return [proxy];
-    }
+    liveReloadPort: 35729
   });
 });
 
@@ -110,7 +161,7 @@ gulp.task('clean', function(cb) {
 
 
 // by default build project and then watch files in order to trigger livereload
-gulp.task('default', ['images', 'html','scripts', 'styles', 'serve', 'watch']);
+gulp.task('default', ['images', 'html', 'vendorCss', 'vendorJs', 'vendorFonts', 'scripts', 'styles', 'serve', 'watch']);
 
 // waits until clean is finished then builds the project
 gulp.task('build', ['clean'], function(){

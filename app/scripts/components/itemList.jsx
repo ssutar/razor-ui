@@ -1,7 +1,8 @@
 import React from 'react';
 
 const ItemList = (props) => {
-    let items = props.items.map(item => <li key={ item }>{ item }</li>),
+  debugger;
+    let items = props.items.map(item => <li key={ item.id }>{ item.name }</li>),
       loading = props.loading ? <div className="loading-label">Loading...</div> : '';
 
     return (

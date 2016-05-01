@@ -6,24 +6,27 @@ let RepoStore = Reflux.createStore({
 
   init() {
     this.items = [];
+    this.numberOfItems = 0;
   },
 
-  loadItems() {
+  loadRepos() {
     this.trigger({
       loading: true
     });
   },
 
-  loadItemsCompleted(items) {
-    this.items = items;
+  loadReposSuccess(response) {
+    this.items = response.items;
+    this.numberOfItems = response.total;
 
     this.trigger({
+      numberOfItems: this.numberOfItems,
       items : this.items,
       loading: false
     });
   },
 
-  loadItemsFailed(error) {
+  loadReposFailure(error) {
     this.trigger({
       error : error,
       loading: false

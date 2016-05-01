@@ -7,19 +7,19 @@ const SideBar = (props) => {
       <nav className="navbar navbar-default" role="navigation">
         <div className="side-menu-container clearfix">
           <div className="navbar-header">
-            <a className="navbar-brand" href="#">
+            <Link className="navbar-brand" to="/">
               <div className="icon fa fa-paper-plane"></div>
               <div className="title">Flat Admin V.2</div>
-            </a>
+            </Link>
             <button type="button" className="navbar-expand-toggle pull-right visible-xs">
               <i className="fa fa-times icon"></i>
             </button>
           </div>
           <ul className="nav navbar-nav">
             <li className="active">
-              <a href="index.html">
+              <Link to="/home">
                 <span className="icon fa fa-tachometer"></span><span className="title">Dashboard</span>
-              </a>
+              </Link>
             </li>
             <li className="panel panel-default dropdown">
               <a data-toggle="collapse" href="#dropdown-element">
@@ -128,9 +128,9 @@ const SideBar = (props) => {
               </div>
             </li>
             <li>
-              <a href="license.html">
+              <Link to="/info">
                 <span className="icon fa fa-thumbs-o-up"></span><span className="title">License</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

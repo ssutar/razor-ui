@@ -2,13 +2,13 @@ import Reflux from 'reflux';
 import $ from 'jquery';
 
 const RepoActions = Reflux.createActions({
-  'loadItems': {children: ['completed', 'failed']}
+  'loadRepos': {children: ['success', 'failure']}
 });
 
-RepoActions.loadItems.listen(function(){
-  $.get('/api/collections/repos')
-  .then((response) => this.completed(response.items))
-  .fail((error) => this.failed(error));
+RepoActions.loadRepos.listen(function(path){
+  $.get('/api/collections/' + path)
+  .then((response) => this.success(response))
+  .fail((error) => this.failure(error));
 });
 
 export default RepoActions;

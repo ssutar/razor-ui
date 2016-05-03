@@ -1,11 +1,12 @@
 import React from 'react';
 import RepoStore from '../stores/repoStore';
 import RepoActions from '../actions/repoActions';
+import { Link } from 'react-router';
 
 class RepoTable extends React.Component {
   constructor(props) {
     super(props);
-    this.path = props.path;
+    this.path = props.path || 'repos';
     this.state = {
       numberOfItems: 0,
       loading: true,
@@ -26,6 +27,11 @@ class RepoTable extends React.Component {
     this.setState(state);
   }
 
+  deleteRepo(repoName) {
+    console.log(repoName);
+    RepoActions.deleteRepo(repoName);
+  }
+
   render() {
     let items = this.state.items.map(item => {
       return (
@@ -33,6 +39,7 @@ class RepoTable extends React.Component {
           <td>{ item.name }</td>
           <td>{ item.id }</td>
           <td>{ item.spec }</td>
+          <td><button className="btn btn-default btn-xs" onClick={this.deleteRepo.bind(this, item.name)}>Remove</button></td>
         </tr>
       );
     }),
@@ -45,6 +52,11 @@ class RepoTable extends React.Component {
           <div className="card-title">
             <h2 className="title">Repositories ({this.state.numberOfItems})</h2>
           </div>
+          <div className="pull-right card-action">
+            <Link className="btn btn-info" to="/repos/create">
+              Create new repository
+            </Link>
+          </div>
         </div>
         <div className="card-body">
           {loading}
@@ -54,6 +66,7 @@ class RepoTable extends React.Component {
                 <th>Name</th>
                 <th>ID</th>
                 <th>Spec</th>
+                <th>&nbsp;</th>
               </tr>
             </thead>
             <tbody>

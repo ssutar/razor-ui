@@ -31,6 +31,49 @@ let RepoStore = Reflux.createStore({
       error : error,
       loading: false
     });
+  },
+
+  createRepo() {
+    this.trigger({
+      loading: true
+    })
+  },
+
+  createRepoSuccess(response) {
+    this.trigger({
+      success : true,
+      loading: false
+    });
+  },
+
+  createRepoFailure(error) {
+    this.trigger({
+      error : true,
+      loading: false
+    });
+  },
+
+  deleteRepo() {
+    this.trigger({
+      loading: true
+    })
+  },
+
+  deleteRepoSuccess(response) {
+    this.items = [];
+    this.numberOfItems = 0;
+    this.trigger({
+      numberOfItems: this.numberOfItems,
+      items : this.items,
+      loading: false
+    });
+  },
+
+  deleteRepoFailure(error) {
+    this.trigger({
+      error : true,
+      loading: false
+    });
   }
 
 });

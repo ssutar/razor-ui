@@ -9,9 +9,6 @@ const Header = (props) => {
           <button type="button" className="navbar-expand-toggle">
             <i className="fa fa-bars icon"></i>
           </button>
-          <ol className="breadcrumb navbar-breadcrumb">
-            <li className="active">Dashboard</li>
-          </ol>
           <button type="button" className="navbar-right-expand-toggle pull-right visible-xs">
             <i className="fa fa-th icon"></i>
           </button>

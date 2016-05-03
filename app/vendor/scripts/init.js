@@ -35,3 +35,10 @@ $(function() {
   });
 });
 
+$.ajaxSetup({
+  contentType : 'application/json',
+  beforeSend: function(xhr) {
+    xhr.setRequestHeader( "Content-type", "application/json" );
+  }
+});
+

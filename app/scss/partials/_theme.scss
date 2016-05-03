@@ -603,11 +603,8 @@ $theme-danger-color: $color-red;
 
   // Button
   .btn.btn-default {
-    background-color: $color-lighter-grey;
-    border-color: $color-grey;
-  }
-  .btn.btn-default:hover {
-    background-color: $color-grey;
+    background-color: $color-white;
+    border-color: $color-dark-grey;
   }
 
   .btn.btn-primary {
@@ -632,6 +629,9 @@ $theme-danger-color: $color-red;
     background-color: $color-blue;
     color: $color-white;
     border-color: $color-blue;
+  }
+  .btn.btn-info:hover {
+    background-color: darken($color-blue, 5%);
   }
   .btn.btn-danger {
     background-color: $color-red;

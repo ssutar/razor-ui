@@ -1,15 +1,20 @@
 import React from 'react';
-import Util from '../helpers/util';
 import RepoTable from '../components/repoTable.jsx';
+import Util from '../helpers/util.js';
 
-class Home extends React.Component {
-  render() {
+class Repos extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props = props;
+  }
+
+  render(props) {
     return (
       <div>
         { Util.getPageTitle('Repositories', 'List of repositories on the server') }
         <div className="row">
           <div className="col-xs-12">
-            <RepoTable path="repos"/>
+            {this.props.children}
           </div>
         </div>
       </div>
@@ -17,4 +22,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default Repos;

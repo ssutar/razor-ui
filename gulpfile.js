@@ -30,8 +30,7 @@ var autoprefixerBrowsers = [
 
 gulp.task("vendorCss", function() {
   return gulp.src([
-      'node_modules/bootstrap/dist/css/bootstrap.css',
-      'node_modules/bootstrap/dist/css/bootstrap-theme.css',
+      'node_modules/bootstrap/dist/css/bootstrap.min.css',
       'node_modules/font-awesome/css/font-awesome.css',
       'node_modules/animate.css/animate.css',
       'node_modules/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css',

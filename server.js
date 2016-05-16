@@ -20,8 +20,11 @@ var ExpressServer = {
     var self = this;
     // Grab all requests to the server with "/space/".
     this.server.all(path, function(req, res) {
-      console.log("Request made to /api/ --> " + self.apiForwardingUrl + req.originalUrl);
-      apiProxy.web(req, res, {target: self.apiForwardingUrl});
+      console.log('Request made to /api/ --> ' + self.apiForwardingUrl + req.originalUrl);
+      apiProxy.web(req, res, {target: self.apiForwardingUrl}, function(err) {
+        // Proxy error handler
+        console.dir(err);
+      });
     });
   },
 
